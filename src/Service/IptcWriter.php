@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Model\IptcData;
+
 class IptcWriter
 {
     /**
@@ -9,10 +11,10 @@ class IptcWriter
      *
      * $fields must be an array of the following type : `$fields = [IptcHeaderKey::COMMENT => 'Iptc comment']`
      */
-    public function write(string $imagePath, array $fields)
+    public function write(string $imagePath, IptcData $iptcData)
     {
         $data = '';
-        foreach ($fields as $headerKey => $comment) {
+        foreach ($iptcData->toArray() as $headerKey => $comment) {
             $headerKey = substr($headerKey, 2);
             $data .= $this->iptc_make_tag(2, $headerKey, $comment);
         }

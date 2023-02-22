@@ -9,6 +9,14 @@
 			</div>
 
 			<form class="mt-4" method="POST">
+				{% for index, flash_error in app.flashes('error') %}
+					{% if index == 0 %}
+						<div class="alert alert-danger" role="alert">
+							{{flash_error}}
+						</div>
+					{% endif %}
+				{% endfor %}
+
 				<div class="mb-3">
 					<label for="comment" class="form-label">Commentaire</label>
 					<input type="text" name="comment" class="form-control" id="comment" value="{% if comment != null %}{{comment}}{% endif %}">

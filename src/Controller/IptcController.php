@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\IptcData;
 use App\Service\IptcHeaderKey;
 use App\Service\IptcReader;
 use App\Service\IptcWriter;
@@ -10,6 +11,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class IptcController extends AbstractController
 {
@@ -38,7 +40,8 @@ class IptcController extends AbstractController
         ParameterBagInterface $params,
         string $imageName,
         IptcReader $iptcReader,
-        IptcWriter $iptcWriter
+        IptcWriter $iptcWriter,
+        ValidatorInterface $validator
     ) {
         if ($request->getMethod() === "GET") {
             return $this->render("details.html.twig", [
@@ -47,8 +50,18 @@ class IptcController extends AbstractController
             ]);
         } else {
             $imagePath = $params->get("app.images") . $imageName;
-            $iptc = [IptcHeaderKey::COMMENT => $request->request->get('comment', '')];
-            $iptcWriter->write($imagePath, $iptc);
+            $iptcData = new IptcData($request->request->get('comment', ''));
+
+            $errors = $validator->validate($iptcData);
+
+            if (count($errors) > 0) {
+                /** @var ConstraintViolation $validationError */
+                foreach ($errors as $validationError) {
+                    $this->addFlash('error', $validationError->getMessage());
+                }
+            } else {
+                $iptcWriter->write($imagePath, $iptcData);
+            }
 
             return $this->redirectToRoute("app_details", [
                 "imageName" => $imageName
