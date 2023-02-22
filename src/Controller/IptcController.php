@@ -46,11 +46,17 @@ class IptcController extends AbstractController
         if ($request->getMethod() === "GET") {
             return $this->render("details.html.twig", [
                 "imagePath" => $params->get("app.images.web_location") . $imageName,
-                "comment" => $iptcReader->read($imageName, IptcHeaderKey::COMMENT)
+                "comment" => $iptcReader->read($imageName, IptcHeaderKey::COMMENT),
+                "author" => $iptcReader->read($imageName, IptcHeaderKey::AUTHOR),
+                "copyright" => $iptcReader->read($imageName, IptcHeaderKey::COPYRIGHT)
             ]);
         } else {
             $imagePath = $params->get("app.images") . $imageName;
-            $iptcData = new IptcData($request->request->get('comment', ''));
+            $iptcData = new IptcData(
+                $request->request->get('comment', ''),
+                $request->request->get('author', ''),
+                $request->request->get('copyright', ''),
+            );
 
             $errors = $validator->validate($iptcData);
 

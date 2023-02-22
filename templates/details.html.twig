@@ -21,6 +21,14 @@
 					<label for="comment" class="form-label">Commentaire</label>
 					<input type="text" name="comment" class="form-control" id="comment" value="{% if comment != null %}{{comment}}{% endif %}">
 				</div>
+				<div class="mb-3">
+					<label for="author" class="form-label">Auteur</label>
+					<input type="text" name="author" class="form-control" id="author" value="{% if author != null %}{{author}}{% endif %}">
+				</div>
+				<div class="mb-3">
+					<label for="copyright" class="form-label">Copyright</label>
+					<input type="text" name="copyright" class="form-control" id="copyright" value="{% if copyright != null %}{{copyright}}{% endif %}">
+				</div>
 
 				<button type="submit" class="btn btn-primary">Sauvegarder</button>
 				<a href="{{path('app_list')}}" class="btn btn-secondary">Retour</a>

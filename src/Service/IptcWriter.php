@@ -18,6 +18,7 @@ class IptcWriter
             $headerKey = substr($headerKey, 2);
             $data .= $this->iptc_make_tag(2, $headerKey, $comment);
         }
+
         $content = iptcembed($data, $imagePath);
 
         $fp = fopen($imagePath, "wb");
