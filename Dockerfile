@@ -13,4 +13,6 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 
 COPY ./.apache/vhosts.conf /etc/apache2/sites-available/000-default.conf
 
+RUN chmod -R 777 /var/www/data
+
 CMD apachectl -D FOREGROUND

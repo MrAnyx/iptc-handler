@@ -7,7 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
-/data/
+/public/data/images
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

@@ -11,4 +11,4 @@ services:
             - 8088:80
         volumes:
             - ./:/var/www
-            - ./data:/var/www/data
+            # - ./data:/var/www/data
