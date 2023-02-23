@@ -3,7 +3,8 @@
 ## Start the application
 
 ```bash
-docker run -p 8088:80 -tid iptc-handler
+docker pull mranyx/iptc-handler:1.0.0
+docker run -p 8088:80 -tid mranyx/iptc-handler:1.0.0
 ```
 
 Then visit `localhost:8088`
