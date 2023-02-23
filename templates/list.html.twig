@@ -1,11 +1,15 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('css/list.css')}}">
+{% endblock %}
+
 {% block body %}
 
-	<div style="display: grid;  grid-template-columns: repeat(5, 1fr); grid-gap: 10px; padding: 10px;">
+	<div id="grid">
 		{% for image in images %}
-			<a href="{{ path('app_details', {imageName: image.filename}) }}">
-				<img src="{{image.path}}" style="width: 100%; height: 100%; object-fit: cover;">
+			<a href="{{ path('app_details', {imageName: image.filename}) }}" class="grid-link">
+				<img src="{{image.path}}">
 			</a>
 		{% endfor %}
 	</div>

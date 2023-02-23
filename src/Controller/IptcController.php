@@ -8,8 +8,10 @@ use App\Service\IptcReader;
 use App\Service\IptcWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -43,6 +45,12 @@ class IptcController extends AbstractController
         IptcWriter $iptcWriter,
         ValidatorInterface $validator
     ) {
+        $filesystem = new Filesystem();
+
+        if (!$filesystem->exists($params->get("app.images") . $imageName)) {
+            throw new NotFoundHttpException("Image not found");
+        }
+
         if ($request->getMethod() === "GET") {
             return $this->render("details.html.twig", [
                 "imagePath" => $params->get("app.images.web_location") . $imageName,
@@ -51,6 +59,7 @@ class IptcController extends AbstractController
                 "copyright" => $iptcReader->read($imageName, IptcHeaderKey::COPYRIGHT)
             ]);
         } else {
+            $this->denyAccessUnlessGranted("ROLE_USER");
             $imagePath = $params->get("app.images") . $imageName;
             $iptcData = new IptcData(
                 $request->request->get('comment', ''),
