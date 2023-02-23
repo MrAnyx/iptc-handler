@@ -15,4 +15,4 @@ COPY ./.apache/vhosts.conf /etc/apache2/sites-available/000-default.conf
 
 ENTRYPOINT ["bash", "./.docker/start.sh"]
 
-RUN chmod -R 777 /var/www/public/data
+# RUN chmod -R 777 /var/www/public/data
