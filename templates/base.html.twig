@@ -14,9 +14,9 @@
 		<body>
 
 			{% if not is_granted("ROLE_USER") %}
-				<a href="{{ path('app_login') }}" class="btn btn-primary" style="position: absolute; border-radius: 0;">Se connecter</a>
+				<a href="{{ path('app_login') }}" class="btn btn-primary auth-button">Se connecter</a>
 			{% else %}
-				<a href="{{ path('app_logout') }}" class="btn btn-primary" style="position: absolute; border-radius: 0;">Déconnexion</a>
+				<a href="{{ path('app_logout') }}" class="btn btn-primary auth-button">Déconnexion</a>
 			{% endif %}
 
 			{% block body %}{% endblock %}

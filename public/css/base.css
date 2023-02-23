@@ -11,3 +11,9 @@ body {
 	outline: none;
 	box-sizing: border-box;
 }
+
+.auth-button {
+	position: absolute;
+	border-radius: 0;
+	z-index: 1;
+}
