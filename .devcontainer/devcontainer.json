@@ -1,17 +1,15 @@
 {
-	"name": "IPTC-Handler",
+	"name": "iptc-handler",
 	"forwardPorts": [8088],
 	"portsAttributes": {
 		"8088": {
 			"label": "App"
 		}
 	},
-	"dockerComposeFile": "../docker-compose.yaml",
+	"dockerComposeFile": "../docker-compose.dev.yaml",
 	"service": "app",
 	"workspaceFolder": "/var/www",
 	"features": {
-		"ghcr.io/devcontainers/features/github-cli:1": {
-			"version": "latest"
-		}
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	}
 }
