@@ -3,21 +3,29 @@
 namespace App\Service;
 
 use App\Model\IptcData;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class IptcWriter
 {
+    public function __construct(
+        private ParameterBagInterface $params
+    ) {
+    }
+
     /**
      * Write iptc field to image file
      *
      * $fields must be an array of the following type : `$fields = [IptcHeaderKey::COMMENT => 'Iptc comment']`
      */
-    public function write(string $imagePath, IptcData $iptcData)
+    public function write(string $imageName, IptcData $iptcData)
     {
         $data = '';
         foreach ($iptcData->toArray() as $headerKey => $comment) {
             $headerKey = substr($headerKey, 2);
             $data .= $this->iptc_make_tag(2, $headerKey, $comment);
         }
+
+        $imagePath = $this->params->get("app.images") . $imageName;
 
         $content = iptcembed($data, $imagePath);
 

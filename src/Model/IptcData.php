@@ -16,16 +16,6 @@ class IptcData
     #[Assert\Length(max: 128, maxMessage: 'Les copyrights ne peut pas dépasser {{ limit }} caractères')]
     private string $copyright = "";
 
-    public function __construct(
-        string $comment,
-        string $author,
-        string $copyright,
-    ) {
-        $this->comment = $comment;
-        $this->author = $author;
-        $this->copyright = $copyright;
-    }
-
     public function getComment(): string
     {
         return $this->comment;

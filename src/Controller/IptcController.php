@@ -60,12 +60,10 @@ class IptcController extends AbstractController
             ]);
         } else {
             $this->denyAccessUnlessGranted("ROLE_USER");
-            $imagePath = $params->get("app.images") . $imageName;
-            $iptcData = new IptcData(
-                $request->request->get('comment', ''),
-                $request->request->get('author', ''),
-                $request->request->get('copyright', ''),
-            );
+            $iptcData = new IptcData();
+            $iptcData->setComment($request->request->get('comment', ''))
+                     ->setAuthor($request->request->get('author', ''))
+                     ->setCopyright($request->request->get('copyright', ''));
 
             $errors = $validator->validate($iptcData);
 
@@ -75,7 +73,7 @@ class IptcController extends AbstractController
                     $this->addFlash('error', $validationError->getMessage());
                 }
             } else {
-                $iptcWriter->write($imagePath, $iptcData);
+                $iptcWriter->write($imageName, $iptcData);
             }
 
             return $this->redirectToRoute("app_details", [
